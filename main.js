@@ -70,18 +70,18 @@ client.on("message", async message => {
         if (!message.guild.me.hasPermission(cmd.conf.botPermNeeded[i])) {
           client.embed(message.channel, client.config.botPermNeededMessage.replace(/<\/author\/>/g, message.author).replace(/<\/perm\/>/g, (client.lang && client.lang["PERMISSIONS_" + cmd.conf.botPermNeeded[i]]) ? client.lang["PERMISSIONS_" + cmd.conf.botPermNeeded[i]] : cmd.conf.botPermNeeded[i]));
           return;
-        }
-      }
-    }
+        };
+      };
+    };
     if (cmd.conf.memberPermNeeded && cmd.conf.memberPermNeeded.length >= 1) {
       for (var i in cmd.conf.memberPermNeeded) {
         if (typeof cmd.conf.memberPermNeeded[i] !== "string") continue;
         if (!message.member.hasPermission(cmd.conf.memberPermNeeded[i])) {
           client.embed(message.channel, client.config.memberPermNeededMessage.replace(/<\/author\/>/g, message.author).replace(/<\/perm\/>/g, (client.lang && client.lang["PERMISSIONS_" + cmd.conf.memberPermNeeded[i]]) ? client.lang["PERMISSIONS_" + cmd.conf.memberPermNeeded[i]] : cmd.conf.memberPermNeeded[i]));
           return;
-        }
-      }
-    }
+        };
+      };
+    };
     
     try {
       cmd.run(client, message, args);
