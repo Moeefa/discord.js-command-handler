@@ -5,7 +5,6 @@ process.setMaxListeners(0);
 client.config = require("./config.js");
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
-client.prefix = "Your bot prefix"
 
 require('child_process').execFile('find', [ 'commands/' ], function(err, stdout, stderr) {
   var files = stdout.split('\n');
@@ -57,7 +56,7 @@ client.on("message", async message => {
   
   let command = message.content.split(" ")[0];
   let args = message.content.split(" ").slice(1);
-  let prefix = client.prefix;
+  let prefix = client.config.prefix;
   
   if (0 !== message.content.indexOf(prefix)) return;
     
