@@ -101,4 +101,4 @@ client.on("message", async message => {
     let k = `User: ${message.author.tag}\nUser's ID: ${message.author.id}\nPermission level: ${client.permlevel(message)}\nExecuted command: ${cmd.help.name}`;
     message.guild && (k += `\nServer: ${message.guild.name}\nChannel: ${message.channel.name}`), console.log(`\n${k}\n`);
   };
-})
+});
