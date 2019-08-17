@@ -1,6 +1,12 @@
 const Discord = require('discord.js'),
       client = new Discord.Client();
 
+process.setMaxListeners(0);
+client.config = require("./config.js");
+client.commands = new Discord.Collection();
+client.aliases = new Discord.Collection();
+client.prefix = "Your bot prefix"
+
 require('child_process').execFile('find', [ 'commands/' ], function(err, stdout, stderr) {
   var files = stdout.split('\n');
   if (err) {
@@ -25,7 +31,6 @@ require('child_process').execFile('find', [ 'commands/' ], function(err, stdout,
       props.conf.aliases.forEach(alias => {
         client.aliases.set(alias, props.help.name);
       });
-      client.array.push({help:{name: props.help.name, endescription: props.help.endescription, description: props.help.description, category: props.help.category, usage: props.help.usage, enusage: props.help.enusage}, conf:{permLevel: props.conf.permLevel, guildOnly: props.conf.guildOnly, enabled: props.conf.enabled, aliases: props.conf.aliases}});
     } catch (err) {
       if (err.message === "Cannot read property 'name' of undefined") {
         return console.error(`I couldn't find module.exports.help or exports.help in: ${f}`);
