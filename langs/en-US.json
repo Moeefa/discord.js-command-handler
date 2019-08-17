@@ -1,0 +1,20 @@
+{
+  "PERMISSIONS_KICK_MEMBERS": "Kick members",
+  "PERMISSIONS_BAN_MEMBERS": "Ban members",
+  "PERMISSIONS_ADMINISTRATOR": "Administrator",
+  "PERMISSIONS_MANAGE_CHANNEL": "Manage channel",
+  "PERMISSIONS_MANAGE_SERVER": "Manage server",
+  "PERMISSIONS_MESSAGE_ADD_REACTION": "Add reactions",
+  "PERMISSIONS_MESSAGE_HISTORY": "View message history",
+  "PERMISSIONS_VIEW_AUDIT_LOGS": "View Audit Logs",
+  "PERMISSIONS_MESSAGE_READ": "Read messages",
+  "PERMISSIONS_MESSAGE_WRITE": "Send messages",
+  "PERMISSIONS_MANAGE_MESSAGES": "Manage messages",
+  "PERMISSIONS_MESSAGE_EXT_EMOJI": "Use external emojis",
+  "PERMISSIONS_MANAGE_ROLES": "Manage roles",
+  "PERMISSIONS_MANAGE_PERMISSIONS": "Manage permissions",
+  "PERMISSIONS_MANAGE_WEBHOOKS": "Manage webhooks",
+  "PERMISSIONS_MANAGE_EMOTES": "Manage emotes",
+  "PERMISSIONS_CREATE_INSTANT_INVITE": "Create a instant invite",
+  "PERMISSIONS_MESSAGE_EMBED_LINKS": "Embed links"
+}
