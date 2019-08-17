@@ -20,7 +20,6 @@ require('child_process').execFile('find', [ 'commands/' ], function(err, stdout,
   if (jsfile.length <= 0) return console.error(`I didn't found any command. 🙇`);
   
   console.log(`Loading ${jsfile.length} commands.`);
-  var loadeds = 0;
   jsfile.forEach((f, i) => {
     try {
       let props = require(`./${f}`);
