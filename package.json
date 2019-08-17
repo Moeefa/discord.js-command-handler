@@ -1,0 +1,26 @@
+{
+  "name": "Discord.js-Command-Handler",
+  "version": "0.0.1",
+  "description": "A configurable Discord.js command handler.",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "discord.js": "^11.5.1"
+  },
+  "engines": {
+    "node": "10.x"
+  },
+  "repository": {
+    "url": "https://github.com/Moeefa/Discord.js-Command-Handler"
+  },
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "discord",
+    "discord.js",
+    "handler",
+    "command"
+  ]
+}
