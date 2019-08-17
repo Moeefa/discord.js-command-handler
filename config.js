@@ -2,6 +2,8 @@ const config = {
   "ownerID": "",
   "admins": [],
   "support": [],
+  
+  "prefix": "Your bot prefix",
 
   "errors": {
     "log_channel": "0",
