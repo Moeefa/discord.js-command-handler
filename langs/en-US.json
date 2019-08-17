@@ -15,7 +15,7 @@
   "PERMISSIONS_EMBED_LINKS": "Embed links",
   "PERMISSIONS_ATTACH_FILES": "Attach files",
   "PERMISSIONS_READ_MESSAGE_HISTORY": "View message history",
-  "PERMISSIONS_MENTION_EVERYONE": "Mention everyone"
+  "PERMISSIONS_MENTION_EVERYONE": "Mention everyone",
   "PERMISSIONS_USE_EXTERNAL_EMOJIS": "Use external emojis",
   "PERMISSIONS_CONNECT": "Connect in a voice channel",
   "PERMISSIONS_SPEAK": "Speak in a voice channel",
