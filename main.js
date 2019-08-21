@@ -95,7 +95,7 @@ client.on("message", async message => {
         client.channels.get(client.config.errors.log_channel).send(_embed_error);
       };
       if (client.config.errors.warn_console === true) {
-        console.error(`Something went wrong with ${cmd.help.name}: ${err}\n Error line: ${client.config.findErrorSource(err)}`);
+        console.error(err);
       };
     };
     let k = `User: ${message.author.tag}\nUser's ID: ${message.author.id}\nPermission level: ${client.permlevel(message)}\nExecuted command: ${cmd.help.name}`;
