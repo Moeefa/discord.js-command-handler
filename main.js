@@ -102,3 +102,5 @@ client.on("message", async message => {
     message.guild && (k += `\nServer: ${message.guild.name}\nChannel: ${message.channel.name}`), console.log(`\n${k}\n`);
   };
 });
+
+client.login(client.config.token)
