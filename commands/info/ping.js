@@ -6,7 +6,7 @@ module.exports.run = async (client, message, args) => {
   .setColor('RANDOM')
   const msg = await message.channel.send(embed)
    embed.setColor('RANDOM')
-   embed.setDescription(`Pong! 🏓 Meu ping é de ${msg.createdTimestamp - message.createdTimestamp}ms. Ping da API é de ${Math.round(client.ping)}ms`)
+   embed.setDescription(`Pong! 🏓 My ping is ${msg.createdTimestamp - message.createdTimestamp}ms. API's ping is ${Math.round(client.ping)}ms`)
    await msg.edit(embed)
 };
 
