@@ -4,7 +4,7 @@ const config = {
   "support": [],
   
   "prefix": "Your bot prefix",
-  "token": "Your bot token, don't share it to anyone."
+  "token": "Your bot token, don't share it to anyone.",
 
   "errors": {
     "log_channel": "0",
