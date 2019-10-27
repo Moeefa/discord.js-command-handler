@@ -39,7 +39,7 @@ require('child_process').execFile('find', [ 'commands/' ], function(err, stdout,
       };
     };
   });
-  console.log(`${client.commands.array().length} loaded commands.`)
+  console.log(`${client.commands.array().length} of ${jsfile.length} commands loaded.`)
   
   client.levelCache = {};
   for (let a = 0; a < client.config.permLevels.length; a++) {
@@ -91,7 +91,7 @@ client.on("message", async message => {
         message.channel.send(embed);
       };
       if (client.config.errors.log_channel !== "0") {
-        const _embed_error = new Discord.RichEmbed().setTitle(`Something went wrong on try to run this command: *${cmd.help.name}*.`).addField(err.name, `\`\`\`xlsx\n${err.message}\n\`\`\`\nError line: \`\`${client.config.findErrorSource(err)}\`\``).addBlankField(true).setColor('RANDOM').setTimestamp();
+        const _embed_error = new Discord.RichEmbed().setTitle(`Something went wrong on try to run this command: *${cmd.help.name}*.`).addField(err.name, `\`\`\`xlsx\n${err.message}\n\`\`\``).addBlankField(true).setColor('RANDOM').setTimestamp();
         client.channels.get(client.config.errors.log_channel).send(_embed_error);
       };
       if (client.config.errors.warn_console === true) {
