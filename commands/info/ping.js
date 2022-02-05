@@ -1,13 +1,14 @@
-const { RichEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 
-module.exports.run = async (client, message, args) => {
-  const embed = new RichEmbed()
+module.exports.run = async (bot, msg, args) => {
+  const embed = new MessageEmbed()
   .setDescription('Ping?')
-  .setColor('RANDOM')
-  const msg = await message.channel.send(embed)
-   embed.setColor('RANDOM')
-   embed.setDescription(`Pong! 🏓 My ping is ${msg.createdTimestamp - message.createdTimestamp}ms. API's ping is ${Math.round(client.ping)}ms`)
-   await msg.edit(embed)
+  .setColor(bot.config.primaryColor);
+  const pingMsg = await msg.channel.send({ embeds: [embed] });
+
+  embed.setColor(bot.config.primaryColor);
+  embed.setDescription(`Pong! 🏓 My ping is ${msg.createdTimestamp - message.createdTimestamp}ms. API's ping is ${Math.round(client.ping)}ms`);
+  pingMsg.edit(embed);
 };
 
 module.exports.conf = {
@@ -23,5 +24,5 @@ module.exports.help = {
   name: 'ping',
   category: 'Informations',
   description: 'Sends bot ping.',
-  usage: 'ping',
+  usage: 'ping'
 };
