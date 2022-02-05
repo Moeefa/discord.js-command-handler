@@ -8,7 +8,7 @@ module.exports = async function(bot, msg) {
   const cmd = bot.commands.get(command) || bot.commands.get(bot.aliases.get(command));
   
   if (!cmd) return;
-  if (cmd.help.category == "Developers" && msg.author.id !== bot.config.ownerID) return msg.reply("You're not my owner.")
+  if (cmd.help.category == bot.config.devFolder && msg.author.id !== bot.config.ownerID) return msg.reply("You're not my owner.")
   if (cmd.conf && cmd.conf.enabled == false) return;
   if (!msg.guild && cmd.conf && cmd.conf.guildOnly == true) return msg.reply("You can only use this command in guilds!");
   
