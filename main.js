@@ -1,106 +1,82 @@
-const Discord = require('discord.js'),
-      client = new Discord.Client();
+const Discord = require('discord.js'), // Require discord.js package.
+      client = new Discord.Client(); // Create a new discord.js client, you can set your options object there, such as intents, etc.
 
-process.setMaxListeners(0);
-client.config = require("./config.js");
-client.commands = new Discord.Collection();
-client.aliases = new Discord.Collection();
-
-require('child_process').execFile('find', [ 'commands/' ], function(err, stdout, stderr) {
-  var files = stdout.split('\n');
-  if (err) {
-    if (err.message === "ENOENT: no such file or directory, scandir './commands/'") {
-      return console.error(`I didn't found commands directory. 🙇`);
-    } else {
-      return console.error(`Something wen't wrong: ${err}`);
-    };
-  };
-
-  let jsfile = files.filter(f => f.split(".").pop() === "js");
-  if (jsfile.length <= 0) return console.error(`I didn't found any command. 🙇`);
-  
-  console.log(`Loading ${jsfile.length} commands.`);
-  jsfile.forEach((f, i) => {
-    try {
-      let props = require(`./${f}`);
-      if (!props.run) return console.error(`I couldn't find module.exports.run or exports.run in: ${f}`);
-      console.log(`Loading command: ${props.help.name}.`);
-      client.commands.set(props.help.name, props);
-      props.conf.aliases.forEach(alias => {
-        client.aliases.set(alias, props.help.name);
-      });
-    } catch (err) {
-      if (err.message === "Cannot read property 'name' of undefined") {
-        return console.error(`I couldn't find module.exports.help or exports.help in: ${f}`);
-      } else if (err.message === "Cannot read property 'aliases' of undefined") {
-        return console.error(`I couldn't find module.exports.conf or exports.conf in: ${f}`);
-      } else {
-        return console.error(`Something went wrong with the command ${f}: ${err}`);
-      };
-    };
+bot.config = require("./config.json"); // Configuration file for the bot.
+bot.categories = new Discord.Collection(); // Commands categories.
+bot.commands = new Discord.Collection(); // Commands object.
+bot.aliases = new Discord.Collection(); // Aliases for commands.
+bot.updatePresence = function updatePresence() { // Set bot activity to random array value.
+  let totalSeconds = (bot.uptime / 1000);
+  let hours = Math.floor(totalSeconds / 3600);
+  var act = [
+    ["Discord.js Command Handler by Moeefa!", "PLAYING"],
+  ];
+  var rnd = act[Math.floor(Math.random() * act.length)];
+  bot.user.setActivity(rnd[0], {
+    type: rnd[1]
   });
-  console.log(`${client.commands.array().length} of ${jsfile.length} commands loaded.`)
-  
-  client.levelCache = {};
-  for (let a = 0; a < client.config.permLevels.length; a++) {
-    const b = client.config.permLevels[a];
-    client.levelCache[b.name] = b.level;
-  };
+};
+
+// -------------------- Load commands --------------------
+
+fs.readdir("./events/", (err, files) => { // Read every file in "events" folder.
+  if (err) return console.error(err);
+  files.forEach(file => {
+    const event = require(`./events/${file}`);
+    let eventName = file.split(".")[0];
+    bot.on(eventName, event.bind(null, bot));
+  });
 });
 
-client.on("message", async message => {
-  client.lang = require(`./langs/en-US.json`);
-  require("./modules/functions.js")(client, message);
-  if (message.author.bot) return;
-  
-  let command = message.content.split(" ")[0];
-  let args = message.content.split(" ").slice(1);
-  let prefix = client.config.prefix;
-  
-  if (0 !== message.content.indexOf(prefix)) return;
-    
-  let cmd = client.commands.get(command.slice(prefix.length)) || client.commands.get(client.aliases.get(command.slice(prefix.length)));
-  if (cmd) {
-    if (!message.guild && cmd.conf.guildOnly) return client.embed(message.channel, "You can't use this command in DMs. Use it in a server.");
-    const conf = client.config.defaultSettings;
-    if (client.permlevel(message) < client.levelCache[cmd.conf.permLevel]) return true === conf.systemNotice ? client.embed(message.channel, `<@${message.author.id}> You don't have permission to use this command.`) : void 0;
-    if (cmd.conf.botPermNeeded && cmd.conf.botPermNeeded.length >= 1) {
-      for (var i in cmd.conf.botPermNeeded) {
-        if (typeof cmd.conf.botPermNeeded[i] !== "string") continue;
-        if (!message.guild.me.hasPermission(cmd.conf.botPermNeeded[i])) {
-          client.embed(message.channel, client.config.botPermNeededMessage.replace(/<\/author\/>/g, message.author).replace(/<\/perm\/>/g, (client.lang && client.lang["PERMISSIONS_" + cmd.conf.botPermNeeded[i]]) ? client.lang["PERMISSIONS_" + cmd.conf.botPermNeeded[i]] : cmd.conf.botPermNeeded[i]));
-          return;
-        };
-      };
-    };
-    if (cmd.conf.memberPermNeeded && cmd.conf.memberPermNeeded.length >= 1) {
-      for (var i in cmd.conf.memberPermNeeded) {
-        if (typeof cmd.conf.memberPermNeeded[i] !== "string") continue;
-        if (!message.member.hasPermission(cmd.conf.memberPermNeeded[i])) {
-          client.embed(message.channel, client.config.memberPermNeededMessage.replace(/<\/author\/>/g, message.author).replace(/<\/perm\/>/g, (client.lang && client.lang["PERMISSIONS_" + cmd.conf.memberPermNeeded[i]]) ? client.lang["PERMISSIONS_" + cmd.conf.memberPermNeeded[i]] : cmd.conf.memberPermNeeded[i]));
-          return;
-        };
-      };
-    };
-    
-    try {
-      cmd.run(client, message, args);
-    } catch (err) {
-      if (client.config.errors.warn_user === true) {
-        const embed = new Discord.RichEmbed().setDescription(`Something went wrong with \`\`${cmd.help.name}\`\`: \`\`\`xlsx\n${err.message}\n\`\`\``).setColor("RANDOM");
-        message.channel.send(embed);
-      };
-      if (client.config.errors.log_channel !== "0") {
-        const _embed_error = new Discord.RichEmbed().setTitle(`Something went wrong on try to run this command: *${cmd.help.name}*.`).addField(err.name, `\`\`\`xlsx\n${err.message}\n\`\`\``).addBlankField(true).setColor('RANDOM').setTimestamp();
-        client.channels.get(client.config.errors.log_channel).send(_embed_error);
-      };
-      if (client.config.errors.warn_console === true) {
-        console.error(err);
-      };
-    };
-    let k = `User: ${message.author.tag}\nUser's ID: ${message.author.id}\nPermission level: ${client.permlevel(message)}\nExecuted command: ${cmd.help.name}`;
-    message.guild && (k += `\nServer: ${message.guild.name}\nChannel: ${message.channel.name}`), console.log(`\n${k}\n`);
-  };
+klaw("./commands/").on("data", item => { // Read every file in "commands" folder.
+  const cmdFile = path.parse(item.path);
+  if (!cmdFile.ext || cmdFile.ext !== ".js") return;
+  let commandName = cmdFile.name.split(".")[0];
+  const response = _loadCommand(cmdFile.dir, `${commandName}`);
+  if (response) console.log(response);
 });
 
-client.login(client.config.token)
+bot.login(process.env.TOKEN); // Login the bot.
+
+function _loadCommand(commandPath, commandName) { // Function to load commands.
+  try {
+    console.log(`Loading command: \x1b[34m${commandName}\x1b[0m`);
+    const props = require(`${commandPath}${path.sep}${commandName}`);
+
+    !props.help
+      ? (props.help = {
+          category: commandPath.slice(
+            commandPath.lastIndexOf("/") + 1,
+            commandPath.length
+          ),
+          name: commandName
+        })
+      : (props.help.category = commandPath.slice(
+          commandPath.lastIndexOf("/") + 1,
+          commandPath.length
+        )),
+      (props.help.name = commandName);
+    !props.conf
+      ? (props.conf = {
+          guildOnly: true
+        })
+      : (props.conf.guildOnly == undefined)
+      ? (props.conf.guildOnly = true)
+      : void 0;
+
+    bot.categories.set(
+      commandPath.slice(commandPath.lastIndexOf("/") + 1, commandPath.length),
+      commandPath.slice(commandPath.lastIndexOf("/") + 1, commandPath.length)
+    );
+    bot.commands.set(commandName, props);
+    props.conf && props.conf.aliases
+      ? props.conf.aliases.forEach(alias => {
+          bot.aliases.set(alias, props.help.name);
+        })
+      : void 0;
+
+    return false;
+  } catch (e) {
+    throw e;
+  }
+}
