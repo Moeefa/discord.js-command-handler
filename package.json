@@ -4,13 +4,13 @@
   "description": "Easy to use and configurable Discord.js command handler.",
   "main": "main.js",
   "scripts": {
-    "start": "node main.js"
+    "start": "node index.js"
   },
   "dependencies": {
-    "discord.js": "^11.5.1"
+    "discord.js": "^13.6.0"
   },
   "engines": {
-    "node": "10.x"
+    "node": "16.x"
   },
   "repository": {
     "url": "https://github.com/Moeefa/Discord.js-Command-Handler"
@@ -18,7 +18,6 @@
   "keywords": [
     "node",
     "discord",
-    "discord.js",
     "handler",
     "command"
   ]
