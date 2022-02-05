@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 
-module.exports.run = async (bot, msg, args) => {
+exports.run = async (bot, msg, args) => {
   const embed = new MessageEmbed()
   .setDescription('Ping?')
   .setColor(bot.config.primaryColor);
@@ -11,7 +11,7 @@ module.exports.run = async (bot, msg, args) => {
   pingMsg.edit(embed);
 };
 
-module.exports.conf = {
+exports.conf = {
   enabled: true,
   guildOnly: false,
   aliases: [],
@@ -20,7 +20,7 @@ module.exports.conf = {
   permLevel: 'User'
 };
 
-module.exports.help = {
+exports.help = {
   name: 'ping',
   category: 'Informations',
   description: 'Sends bot ping.',
