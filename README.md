@@ -8,6 +8,9 @@ You can take a look at Discord.js docs: https://discord.js.org/ (if you're from 
 You can modify ``config.json`` to modify the color of embeds, the ID of owner of the bot and the commands prefix.
 
 To login your bot, in the line 41 of ``index.js`` change the ``process.env.TOKEN`` to your token.
+```js
+client.login(process.env.TOKEN);
+```
 <br/>The ``process.env`` lets you access your ``.env`` file, that in most of hosts is your secret environment, that means that only you can see it or modify the value of it.
 <br/>It's recommended to use a secret environment if your project is public or shared, since if someone has access to your bot token, the person can do everything with your bot.
 
@@ -20,4 +23,18 @@ are automatically created with default values, you can change default values in 
 ##### Risky commands? It's okay, only you'll have access to run it
 To create a command that only you can use, so you don't run the risk to someone access your secrets commands, create a folder named "dev" then insert your command file in there.
 <br/>You can change which folder is it from the ``config.json`` in ``devFolder``.
-<br/>In way to it works, your ID in ``ownerID`` needs to be correct.
+<br/>In order to it works, your ID in ``ownerID`` needs to be correct.
+
+##### Do the member or bot need permission to run the command?
+You can set a ``memberPermissionNeeded`` or ``botPermissionNeeded`` array in your exported config object at your command file.
+E.g.:
+```js
+exports.config = {
+  memberPermissionNeeded: ["ADMINISTRATOR"], // The permission the member need to run the command in the guild it was ran.
+  botPermissionNeeded: ["MANAGE_CHANNELS"] // The permission your bot need to run the command in the guild it was ran.
+};
+```
+These strings need to be a permission flag, you can checkout the avaibles permissions flags here:
+https://discord.js.org/#/docs/discord.js/stable/class/Permissions?scrollTo=s-FLAGS
+
+The permission will be checked before the command run.
