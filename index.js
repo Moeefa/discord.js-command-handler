@@ -1,5 +1,5 @@
 const Discord = require('discord.js'), // Require discord.js package.
-      client = new Discord.Client(); // Create a new discord.js client, you can set your options object there, such as intents, etc.
+      bot = new Discord.Client(); // Create a new discord.js client, you can set your options object there, such as intents, etc.
 
 bot.config = require("./config.json"); // Configuration file for the bot.
 bot.categories = new Discord.Collection(); // Commands categories.
