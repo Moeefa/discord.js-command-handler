@@ -14,6 +14,24 @@ client.login(process.env.TOKEN);
 <br/>The ``process.env`` lets you access your ``.env`` file, that in most of hosts is your secret environment, that means that only you can see it or modify the value of it.
 <br/>It's recommended to use a secret environment if your project is public or shared, since if someone has access to your bot token, the person can do everything with your bot.
 
+##### Command configuration
+An example of how to configure your command:
+```js
+exports.help = {
+  name: "command", // The name of your command, that's gonna be called.
+  category: "category", // The category.
+  usage: "command" // Usage of the command.
+};
+
+exports.conf = {
+  enabled: true, // Wether if the command is enabled or not.
+  guildOnly: false, // If the command can only be requested from a guild.
+  memberPermNeeded: ["ADMINISTRATOR"], // The permission the member need to run command.
+  botPermNeeded: ["ADMINISTRATOR"], // The permission the bot need to run command.
+  aliases: ["cmd"] // Aliases for this command.
+};
+```
+
 ##### How to create commands
 In the commands folder, you can create another folder that'll be assigned as your command category automatically and in there, you can
 create a file with your command.
