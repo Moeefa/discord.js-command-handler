@@ -35,7 +35,7 @@ To create a command that only you can use, so you don't run the risk to someone 
 You can set a ``memberPermissionNeeded`` or ``botPermissionNeeded`` array in your exported config object at your command file.
 E.g.:
 ```js
-exports.config = {
+exports.conf = {
   memberPermissionNeeded: ["ADMINISTRATOR"], // The permission the member need to run the command in the guild it was ran.
   botPermissionNeeded: ["MANAGE_CHANNELS"] // The permission your bot need to run the command in the guild it was ran.
 };
