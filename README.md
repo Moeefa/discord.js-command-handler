@@ -31,6 +31,7 @@ exports.conf = {
   aliases: ["cmd"] // Aliases for this command.
 };
 ```
+All these configurations are optional.
 
 ##### How to create commands
 In the commands folder, you can create another folder that'll be assigned as your command category automatically and in there, you can
