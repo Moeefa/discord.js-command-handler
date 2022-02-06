@@ -17,7 +17,13 @@ client.login(process.env.TOKEN);
 ##### How to create commands
 In the commands folder, you can create another folder that'll be assigned as your command category automatically and in there, you can
 create a file with your command.
-<br/>The only thing required in the file is the run function exported, the config and help objects
+<br/>The only thing required in the file is the run function exported. 
+```js
+exports.run = (bot, msg, args) => {
+  // Your command.
+};
+```
+The config and help objects
 are automatically created with default values, you can change default values in ``index.js``.
 
 ##### Risky commands? It's okay, only you'll have access to run it
