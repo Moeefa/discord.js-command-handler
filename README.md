@@ -36,8 +36,8 @@ You can set a ``memberPermissionNeeded`` or ``botPermissionNeeded`` array in you
 E.g.:
 ```js
 exports.conf = {
-  memberPermissionNeeded: ["ADMINISTRATOR"], // The permission the member need to run the command in the guild it was ran.
-  botPermissionNeeded: ["MANAGE_CHANNELS"] // The permission your bot need to run the command in the guild it was ran.
+  memberPermNeeded: ["ADMINISTRATOR"], // The permission the member need to run the command in the guild it was ran.
+  botPermNeeded: ["MANAGE_CHANNELS"] // The permission your bot need to run the command in the guild it was ran.
 };
 ```
 These strings need to be a permission flag, you can checkout the avaibles permissions flags here:
