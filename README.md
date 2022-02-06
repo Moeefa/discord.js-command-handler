@@ -9,7 +9,7 @@ You can modify ``config.json`` to modify the color of embeds, the ID of owner of
 
 To login your bot, in the line 41 of ``index.js`` change the ``process.env.TOKEN`` to your token.
 ```js
-client.login(process.env.TOKEN);
+bot.login(process.env.TOKEN);
 ```
 <br/>The ``process.env`` lets you access your ``.env`` file, that in most of hosts is your secret environment, that means that only you can see it or modify the value of it.
 <br/>It's recommended to use a secret environment if your project is public or shared, since if someone has access to your bot token, the person can do everything with your bot.
