@@ -51,7 +51,7 @@ To create a command that only you can use, so you don't run the risk to someone 
 <br/>In order to it works, your ID in ``ownerID`` needs to be correct.
 
 ##### Do the member or bot need permission to run the command?
-You can set a ``memberPermissionNeeded`` or ``botPermissionNeeded`` array in your exported config object at your command file.
+You can set a ``memberPermNeeded`` or ``botPermNeeded`` array in your exported config object at your command file.
 E.g.:
 ```js
 exports.conf = {
