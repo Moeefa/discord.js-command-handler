@@ -30,34 +30,33 @@ fs.readdir("./events/", (err, files) => { // Read every file in "events" folder.
   });
 });
 
-klaw("./commands/").on("data", item => { // Read every file in "commands" folder.
-  const cmdFile = path.parse(item.path);
-  if (!cmdFile.ext || cmdFile.ext !== ".js") return;
-  let commandName = cmdFile.name.split(".")[0];
-  const response = _loadCommand(cmdFile.dir, `${commandName}`);
-  if (response) console.log(response);
+fs.readdir("./commands", (err, folders) => {
+  folders.forEach(folder => {
+    fs.readdir(`./commands/${folder}`, (err1, files) => {
+      files.forEach(file => {
+        if (!file || path.extname(file) !== ".js") return;
+        let commandName = file.replace(".js", "");
+        const response = _loadCommand(`${folder}`, `${commandName}`);
+        if (response) console.log(response);
+      });
+    });
+  });
 });
 
-bot.login(process.env.TOKEN); // Login the bot.
-
-function _loadCommand(commandPath, commandName) { // Function to load commands.
+function _loadCommand(commandCategory, commandName) {
   try {
     console.log(`Loading command: \x1b[34m${commandName}\x1b[0m`);
-    const props = require(`${commandPath}${path.sep}${commandName}`);
+    const props = require(`./commands/${commandCategory}/${commandName}`);
+    if (props.init) {
+      props.init(bot);
+    }
 
     !props.help
       ? (props.help = {
-          category: commandPath.slice(
-            commandPath.lastIndexOf("/") + 1,
-            commandPath.length
-          ),
+          category: commandCategory,
           name: commandName
         })
-      : (props.help.category = commandPath.slice(
-          commandPath.lastIndexOf("/") + 1,
-          commandPath.length
-        )),
-      (props.help.name = commandName);
+      : void 0;
     !props.conf
       ? (props.conf = {
           guildOnly: true
@@ -66,10 +65,7 @@ function _loadCommand(commandPath, commandName) { // Function to load commands.
       ? (props.conf.guildOnly = true)
       : void 0;
 
-    bot.categories.set(
-      commandPath.slice(commandPath.lastIndexOf("/") + 1, commandPath.length),
-      commandPath.slice(commandPath.lastIndexOf("/") + 1, commandPath.length)
-    );
+    bot.categories.set(commandCategory, commandCategory);
     bot.commands.set(commandName, props);
     props.conf && props.conf.aliases
       ? props.conf.aliases.forEach(alias => {
@@ -79,6 +75,10 @@ function _loadCommand(commandPath, commandName) { // Function to load commands.
 
     return false;
   } catch (e) {
-    throw e;
+    if (process.env.DEVELOPMENT == true) {
+      return `Unable to load command ${commandName}: ${e}`;
+    } else {
+      throw e;
+    }
   }
 }
