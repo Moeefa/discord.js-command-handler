@@ -3,6 +3,7 @@ const Discord = require('discord.js'), // Require discord.js package.
 
 require("./modules/functions.js"); // Call the functions.js file.
 
+bot.login(process.env.TOKEN); // Login the bot.
 bot.config = require("./config.json"); // Configuration file for the bot.
 bot.categories = new Discord.Collection(); // Commands categories.
 bot.commands = new Discord.Collection(); // Commands object.
