@@ -36,6 +36,7 @@ fs.readdir("./events/", (err, files) => { // Read every file in "events" folder.
 fs.readdir("./commands", (err, folders) => {
   folders.forEach(folder => {
     fs.readdir(`./commands/${folder}`, (err1, files) => {
+      if (!files) return;
       files.forEach(file => {
         if (!file || path.extname(file) !== ".js") return;
         let commandName = file.replace(".js", "");
