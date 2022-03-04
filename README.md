@@ -30,6 +30,7 @@ module.exports = {
 };
 ```
 All these configurations are optional.
+You can also take a look at: [_template.js](https://github.com/Moeefa/Discord.js-Command-Handler/blob/Discord.js-v13/commands/_template.js) and [_base.js](https://github.com/Moeefa/Discord.js-Command-Handler/blob/Discord.js-v13/commands/_base.js) files.
 
 ##### How to create commands
 In the commands folder, you can create another folder that'll be assigned as your command category automatically and in there, you can
@@ -43,8 +44,8 @@ module.exports = {
   }
 };
 ```
-The config and help objects
-are automatically created with default values, you can change default values in ``index.js``.
+The config and help objects are automatically created with default values, you can change default values in ``index.js``.
+You can also take a look at: [_template.js](https://github.com/Moeefa/Discord.js-Command-Handler/blob/Discord.js-v13/commands/_template.js) and [_base.js](https://github.com/Moeefa/Discord.js-Command-Handler/blob/Discord.js-v13/commands/_base.js) files.
 
 ##### Risky commands? It's okay, only you'll have access to run it
 To create a command that only you can use, so you don't run the risk to someone access your secrets commands, create a folder named "dev" then insert your command file in there.
@@ -64,3 +65,5 @@ These strings need to be a permission flag, you can checkout the avaibles permis
 https://discord.js.org/#/docs/discord.js/stable/class/Permissions?scrollTo=s-FLAGS
 
 The permission will be checked before the command run.
+You can also take a look at: [_template.js](https://github.com/Moeefa/Discord.js-Command-Handler/blob/Discord.js-v13/commands/_template.js) and [_base.js](https://github.com/Moeefa/Discord.js-Command-Handler/blob/Discord.js-v13/commands/_base.js) files.
+
