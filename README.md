@@ -17,18 +17,16 @@ bot.login(process.env.TOKEN);
 ##### Command configuration
 An example of how to configure your command:
 ```js
-exports.help = {
-  name: "command", // The name of your command, that's gonna be called.
+module.exports = {
+  enabled: true, // Wether if the command is enabled or not.
+  guildOnly: false, // Wether if the command can be only runned from a guild.
+  name: "command", // The name of your command.
+  aliases: ["cmd"], // Aliases for this command.
   category: "category", // The category.
   usage: "command" // Usage of the command.
-};
-
-exports.conf = {
-  enabled: true, // Wether if the command is enabled or not.
-  guildOnly: false, // If the command can only be requested from a guild.
-  memberPermNeeded: ["ADMINISTRATOR"], // The permission the member need to run command.
-  botPermNeeded: ["ADMINISTRATOR"], // The permission the bot need to run command.
-  aliases: ["cmd"] // Aliases for this command.
+  clientPerm: ["ADMINISTRATOR"], // The permission the client need to run command.
+  memberPerm: ["ADMINISTRATOR"] // The permission the member need to run command.
+  run(bot, msg, args) {} // The function to run your command.
 };
 ```
 All these configurations are optional.
@@ -38,8 +36,11 @@ In the commands folder, you can create another folder that'll be assigned as you
 create a file with your command.
 <br/>The only thing required in the file is the run function exported. 
 ```js
-exports.run = (bot, msg, args) => {
-  // Your command.
+module.exports = {
+  // Put your commands config above.
+  run(bot, msg, args) {
+    // Your command.
+  }
 };
 ```
 The config and help objects
@@ -51,12 +52,12 @@ To create a command that only you can use, so you don't run the risk to someone 
 <br/>In order to it works, your ID in ``ownerID`` needs to be correct.
 
 ##### Do the member or bot need permission to run the command?
-You can set a ``memberPermNeeded`` or ``botPermNeeded`` array in your exported config object at your command file.
+You can set a ``memberPerm`` or ``clientPerm`` array in your exported config object at your command file.
 E.g.:
 ```js
-exports.conf = {
-  memberPermNeeded: ["ADMINISTRATOR"], // The permission the member need to run the command in the guild it was ran.
-  botPermNeeded: ["MANAGE_CHANNELS"] // The permission your bot need to run the command in the guild it was ran.
+module.exports = {
+  memberPerm: ["ADMINISTRATOR"], // The permission the member need to run the command in the guild it was ran.
+  clientPerm: ["MANAGE_CHANNELS"] // The permission your bot need to run the command in the guild it was ran.
 };
 ```
 These strings need to be a permission flag, you can checkout the avaibles permissions flags here:
