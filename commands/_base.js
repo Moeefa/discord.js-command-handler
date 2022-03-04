@@ -4,7 +4,7 @@ module.exports = {
   name: String, // Default: file name.
   aliases: Array, // Doesn't have default value.
   description: String, // Doesn't have default value.
-  usage: String // Doesn't have default value.
+  usage: String, // Doesn't have default value.
   category: String, // Default: folder name.
   clientPerm: Array, // Doesn't have default value.
   memberPerm: Array, // Doesn't have default value.
