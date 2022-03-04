@@ -66,7 +66,7 @@ function _loadCommand(commandCategory, commandName) {
     return false;
   } catch (e) {
     if (process.env.NODE_ENV == "production") {
-      return "🥞";
+      return `Couldn't load ${commandName}: ${e.message}`;
     } else {
       throw e;
     };
