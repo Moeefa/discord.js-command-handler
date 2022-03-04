@@ -1,5 +1,8 @@
-const Discord = require('discord.js'), // Require discord.js package.
-      bot = new Discord.Client(); // Create a new discord.js client, you can set your options object there, such as intents, etc.
+const Discord = require("discord.js"); // Require discord.js package.
+const bot = new Discord.Client(); // Create a new discord.js client, you can set your options object there, such as intents, etc.
+
+const fs = require("fs");
+const path = require("path");
 
 require("./modules/functions.js"); // Call the functions.js file.
 
@@ -8,7 +11,7 @@ bot.config = require("./config.json"); // Configuration file for the bot.
 bot.categories = new Discord.Collection(); // Commands categories.
 bot.commands = new Discord.Collection(); // Commands object.
 bot.aliases = new Discord.Collection(); // Aliases for commands.
-bot.updatePresence = function updatePresence() { // Set bot activity to random array value.
+bot.updatePresence = function() { // Set bot activity to random array value.
   let totalSeconds = (bot.uptime / 1000);
   let hours = Math.floor(totalSeconds / 3600);
   var act = [
@@ -23,7 +26,6 @@ bot.updatePresence = function updatePresence() { // Set bot activity to random a
 // -------------------- Load commands --------------------
 
 fs.readdir("./events/", (err, files) => { // Read every file in "events" folder.
-  if (err) return console.error(err);
   files.forEach(file => {
     const event = require(`./events/${file}`);
     let eventName = file.split(".")[0];
@@ -46,40 +48,29 @@ fs.readdir("./commands", (err, folders) => {
 
 function _loadCommand(commandCategory, commandName) {
   try {
-    console.log(`Loading command: \x1b[34m${commandName}\x1b[0m`);
-    const props = require(`./commands/${commandCategory}/${commandName}`);
+    let props = require(`./commands/${commandCategory}/${commandName}`);
+    if (!props.run) return console.log(`\x1b[1m\x1b[30m\x1b[41mCommand ${commandName} doesn't have a run function.\x1b[0m`);
     if (props.init) {
       props.init(bot);
-    }
+    };
 
-    !props.help
-      ? (props.help = {
-          category: commandCategory,
-          name: commandName
-        })
-      : void 0;
-    !props.conf
-      ? (props.conf = {
-          guildOnly: true
-        })
-      : (props.conf.guildOnly == undefined)
-      ? (props.conf.guildOnly = true)
-      : void 0;
+    !props.name ? props.name = commandName : void 0;
+    !props.category ? props.category = commandCategory : void 0;
+    !props.guildOnly && props.guildOnly == undefined ? props.guildOnly = true : void 0;
 
     bot.categories.set(commandCategory, commandCategory);
     bot.commands.set(commandName, props);
-    props.conf && props.conf.aliases
-      ? props.conf.aliases.forEach(alias => {
-          bot.aliases.set(alias, props.help.name);
-        })
+    props.aliases
+      ? props.aliases.forEach(alias => bot.aliases.set(alias, props.name))
       : void 0;
 
+    console.log(`Loaded command: \x1b[34m${commandName}\x1b[0m`);
     return false;
   } catch (e) {
-    if (process.env.DEVELOPMENT == true) {
-      return `Unable to load command ${commandName}: ${e}`;
+    if (process.env.NODE_ENV == "production") {
+      return "🥞";
     } else {
       throw e;
-    }
-  }
-}
+    };
+  };
+};
