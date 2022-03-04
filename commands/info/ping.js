@@ -1,6 +1,9 @@
 const { MessageEmbed } = require('discord.js');
 
 module.exports = {
+  name: 'ping',
+  category: 'Informations',
+  description: 'Sends bot ping.',
   async run(bot, msg, args) {
     const embed = new MessageEmbed()
     .setDescription('Ping?')
