@@ -51,9 +51,6 @@ function _loadCommand(commandCategory, commandName) {
   try {
     let props = require(`./commands/${commandCategory}/${commandName}`);
     if (!props.run) return console.log(`\x1b[1m\x1b[30m\x1b[41mCommand ${commandName} doesn't have a run function.\x1b[0m`);
-    if (props.init) {
-      props.init(bot);
-    };
 
     !props.name ? props.name = commandName : void 0;
     !props.category ? props.category = commandCategory : void 0;
