@@ -35,7 +35,7 @@ module.exports = async function(bot, msg) {
   };
                                  
   try {
-    cmd.run(bot, msg, args)
+    await cmd.run(bot, msg, args)
   } catch (err) {
     throw err;
   };
