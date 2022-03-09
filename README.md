@@ -23,9 +23,9 @@ module.exports = {
   name: "command", // The name of your command.
   aliases: ["cmd"], // Aliases for this command.
   category: "category", // The category.
-  usage: "command" // Usage of the command.
+  usage: "command", // Usage of the command.
   clientPerm: ["ADMINISTRATOR"], // The permission the client need to run command.
-  memberPerm: ["ADMINISTRATOR"] // The permission the member need to run command.
+  memberPerm: ["ADMINISTRATOR"], // The permission the member need to run command.
   run(bot, msg, args) {} // The function to run your command.
 };
 ```
