@@ -12,6 +12,6 @@ module.exports = {
 
     embed.setColor(bot.config.primaryColor);
     embed.setDescription(`Pong! 🏓 My ping is ${msg.createdTimestamp - message.createdTimestamp}ms. API's ping is ${Math.round(client.ping)}ms`);
-    pingMsg.edit(embed);
+    pingMsg.edit({ embeds: [embed] });
   }
 };
