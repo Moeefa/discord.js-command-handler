@@ -1,8 +1,8 @@
 ## Discord.js Command Handler
 ##### Introduction
-This command handler use Discord.js v13 and is free to use to everyone.
+This command handler use Discord.js v14 and is free to use to everyone.
 
-You can take a look at Discord.js docs: https://discord.js.org/ (if you're from the future and use a newer version of Discord.js, like v14, please be aware that there might be some issues and you must revert to v13 or update the handler by yourself).
+You can take a look at Discord.js docs: https://discord.js.org/ (if you're from the future and use a newer version of Discord.js, like v15, please be aware that there might be some issues and you must revert to v14 or update the handler by yourself).
 
 ##### Configure the handler
 You can modify ``config.json`` to modify the color of embeds, the ID of owner of the bot and the commands prefix.
@@ -17,16 +17,13 @@ bot.login(process.env.TOKEN);
 ##### Command configuration
 An example of how to configure your command:
 ```js
-module.exports = {
-  enabled: true, // Wether if the command is enabled or not.
-  guildOnly: false, // Wether if the command can be only runned from a guild.
+export default {
+  dmPermission: false, // Wether if the command can be only runned from a guild.
   name: "command", // The name of your command.
-  aliases: ["cmd"], // Aliases for this command.
   category: "category", // The category.
-  usage: "command", // Usage of the command.
-  clientPerm: ["ADMINISTRATOR"], // The permission the client need to run command.
-  memberPerm: ["ADMINISTRATOR"], // The permission the member need to run command.
-  run(bot, msg, args) {} // The function to run your command.
+  options: [], // Usage of the command.
+  defaultMemberPermissions: [] || String, // The permission the member need to run command.
+  execute(interaction) {} // The function to run your command.
 };
 ```
 All these configurations are optional.
@@ -37,9 +34,9 @@ In the commands folder, you can create another folder that'll be assigned as you
 create a file with your command.
 <br/>The only thing required in the file is the run function exported. 
 ```js
-module.exports = {
+export default {
   // Put your commands config above.
-  run(bot, msg, args) {
+  execute(interaction) {
     // Your command.
   }
 };
@@ -49,19 +46,18 @@ You can also take a look at: [_template.js](https://github.com/Moeefa/Discord.js
 
 ##### Risky commands? It's okay, only you'll have access to run it
 To create a command that only you can use, so you don't run the risk to someone access your secrets commands, create a folder named "dev" then insert your command file in there.
-<br/>You can change which folder is it from the ``config.json`` in ``devFolder``.
-<br/>In order to it works, your ID in ``ownerID`` needs to be correct.
+<br/>You can change which folder is it from the ``config.js`` in ``DevFolder``.
+<br/>In order to it works, your ID in ``OwnerID`` needs to be correct.
 
 ##### Do the member or bot need permission to run the command?
-You can set a ``memberPerm`` or ``clientPerm`` array in your exported config object at your command file.
+You can set a ``defaultMemberPermissions`` string or array in your exported config object at your command file.
 E.g.:
 ```js
-module.exports = {
-  memberPerm: ["ADMINISTRATOR"], // The permission the member need to run the command in the guild it was ran.
-  clientPerm: ["MANAGE_CHANNELS"] // The permission your bot need to run the command in the guild it was ran.
+export default {
+  defaultMemberPermissions: "8" // The permission the member need to run the command in the guild it was ran.
 };
 ```
-These strings need to be a permission flag, you can checkout the avaibles permissions flags here:
+These strings need to be a permission flag bits, you can checkout the avaibles permissions flags here:
 https://discord.js.org/#/docs/discord.js/stable/class/Permissions?scrollTo=s-FLAGS
 
 The permission will be checked before the command run.

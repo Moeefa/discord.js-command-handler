@@ -1,17 +1,12 @@
-const { MessageEmbed } = require('discord.js');
+import Discord from 'discord.js';
 
-module.exports = {
-  name: 'ping',
-  category: 'Informations',
-  description: 'Sends bot ping.',
-  async run(bot, msg, args) {
-    const embed = new MessageEmbed()
-    .setDescription('Ping?')
-    .setColor(bot.config.primaryColor);
-    const pingMsg = await msg.channel.send({ embeds: [embed] });
-
-    embed.setColor(bot.config.primaryColor);
-    embed.setDescription(`Pong! 🏓 My ping is ${msg.createdTimestamp - message.createdTimestamp}ms. API's ping is ${Math.round(client.ping)}ms`);
-    pingMsg.edit({ embeds: [embed] });
+export default {
+  description: this,
+  usage: "ping",
+  dmPermission: true,
+  async execute(interaction) {
+    let m = await interaction.reply({ fetchReply: true, content: "Ping? 🏓" })
+    let a = interaction.__("ping.responses")
+    interaction.editReply(interaction.__("ping.botLatency", m.createdTimestamp - interaction.createdTimestamp) + `\n` + interaction.__mf(a[Math.floor(Math.random() * a.length)], m.createdTimestamp - interaction.createdTimestamp));
   }
 };

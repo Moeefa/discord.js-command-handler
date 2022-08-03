@@ -1,74 +1,42 @@
-const Discord = require("discord.js"); // Require discord.js package.
-const bot = new Discord.Client(); // Create a new discord.js client, you can set your options object there, such as intents, etc.
+import { Collection, Client, GatewayIntentBits, Partials, ActivityType } from "discord.js";
+import { default as config } from "./config.js";
+import fs from "fs";
 
-const fs = require("fs");
-const path = require("path");
+const bot = new Client({ 
+  autoReconnect: true,
+  intents: [
+    GatewayIntentBits.Guilds, 
+    GatewayIntentBits.GuildMessages, 
+    GatewayIntentBits.GuildMembers, 
+    GatewayIntentBits.DirectMessages,
+    GatewayIntentBits.MessageContent
+  ],
+  partials: [Partials.Channel]
+});
 
-require("./modules/functions.js"); // Call the functions.js file.
-
-bot.login(process.env.TOKEN); // Login the bot.
-bot.config = require("./config.json"); // Configuration file for the bot.
-bot.categories = new Discord.Collection(); // Commands categories.
-bot.commands = new Discord.Collection(); // Commands object.
-bot.aliases = new Discord.Collection(); // Aliases for commands.
-bot.updatePresence = function() { // Set bot activity to random array value.
+bot.login(process.env.TOKEN);
+bot.config = config;
+bot.categories = new Collection();
+bot.commands = new Collection();
+bot.updatePresence = () => {
   let totalSeconds = (bot.uptime / 1000);
   let hours = Math.floor(totalSeconds / 3600);
   var act = [
-    ["Discord.js Command Handler by Moeefa!", "PLAYING"],
+    ["Eu ainda estou em testes!", ActivityType.Playing],
+    [`Estou online faz ${hours} horas!`, ActivityType.Playing],
+    [`Quer deletar os seus dados do meu banco de dados? Você pode fazer isso usando /unregister`, ActivityType.Playing]
   ];
   var rnd = act[Math.floor(Math.random() * act.length)];
-  bot.user.setActivity(rnd[0], {
+  bot.user.setActivity("/help | " + rnd[0], {
     type: rnd[1]
   });
 };
 
-// -------------------- Load commands --------------------
-
-fs.readdir("./events/", (err, files) => { // Read every file in "events" folder.
-  files.forEach(file => {
-    const event = require(`./events/${file}`);
+fs.readdir("./events/", (err, files) => {
+  if (err) return console.error(err);
+  files.forEach(async file => {
+    const event = await import(`./events/${file}`);
     let eventName = file.split(".")[0];
-    bot.on(eventName, event.bind(null, bot));
+    bot.on(eventName, event.default.bind(null, bot));
   });
 });
-
-fs.readdir("./commands", (err, folders) => {
-  folders.forEach(folder => {
-    fs.readdir(`./commands/${folder}`, (err1, files) => {
-      if (!files) return;
-      files.forEach(file => {
-        if (!file || path.extname(file) !== ".js") return;
-        let commandName = file.replace(".js", "");
-        const response = _loadCommand(`${folder}`, `${commandName}`);
-        if (response) console.log(response);
-      });
-    });
-  });
-});
-
-function _loadCommand(commandCategory, commandName) {
-  try {
-    let props = require(`./commands/${commandCategory}/${commandName}`);
-    if (!props.run) return console.log(`\x1b[1m\x1b[30m\x1b[41mCommand ${commandName} doesn't have a run function.\x1b[0m`);
-
-    !props.name ? props.name = commandName : void 0;
-    !props.category ? props.category = commandCategory : void 0;
-    !props.guildOnly && props.guildOnly == undefined ? props.guildOnly = true : void 0;
-
-    bot.categories.set(commandCategory, commandCategory);
-    bot.commands.set(commandName, props);
-    props.aliases
-      ? props.aliases.forEach(alias => bot.aliases.set(alias, props.name))
-      : void 0;
-
-    console.log(`Loaded command: \x1b[34m${commandName}\x1b[0m`);
-    return false;
-  } catch (e) {
-    if (process.env.NODE_ENV == "production") {
-      return `Couldn't load ${commandName}: ${e.message}`;
-    } else {
-      throw e;
-    };
-  };
-};
