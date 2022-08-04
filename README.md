@@ -26,8 +26,7 @@ export default {
   execute(interaction) {} // The function to run your command.
 };
 ```
-All these configurations are optional.
-You can also take a look at: [_template.js](https://github.com/Moeefa/Discord.js-Command-Handler/blob/Discord.js-v13/commands/_template.js) and [_base.js](https://github.com/Moeefa/Discord.js-Command-Handler/blob/Discord.js-v13/commands/_base.js) files.
+You can also take a look at: [ApplicationCommandData](https://discord.js.org/#/docs/discord.js/main/typedef/ApplicationCommandData) to see all avaible configurations.
 
 ##### How to create commands
 In the commands folder, you can create another folder that'll be assigned as your command category automatically and in there, you can
@@ -41,8 +40,6 @@ export default {
   }
 };
 ```
-The config and help objects are automatically created with default values, you can change default values in ``index.js``.
-You can also take a look at: [_template.js](https://github.com/Moeefa/Discord.js-Command-Handler/blob/Discord.js-v13/commands/_template.js) and [_base.js](https://github.com/Moeefa/Discord.js-Command-Handler/blob/Discord.js-v13/commands/_base.js) files.
 
 ##### Risky commands? It's okay, only you'll have access to run it
 To create a command that only you can use, so you don't run the risk to someone access your secrets commands, create a folder named "dev" then insert your command file in there.
@@ -54,12 +51,14 @@ You can set a ``defaultMemberPermissions`` string or array in your exported conf
 E.g.:
 ```js
 export default {
-  defaultMemberPermissions: "8" // The permission the member need to run the command in the guild it was ran.
+  defaultMemberPermissions: PermissionFlagsBits.Administrator // The permission the member need to run the command in the guild it was ran.
 };
 ```
-These strings need to be a permission flag bits, you can checkout the avaibles permissions flags here:
-https://discord.js.org/#/docs/discord.js/stable/class/Permissions?scrollTo=s-FLAGS
+These strings need to be a permission flag bits, you can checkout the avaibles permissions flags here: https://discord-api-types.dev/api/discord-api-types-payloads/common#PermissionFlagsBits
 
+You can import these using the following:
+```js
+import { PermissionFlagsBits } from "discord.js";
+```
 The permission will be checked before the command run.
-You can also take a look at: [_template.js](https://github.com/Moeefa/Discord.js-Command-Handler/blob/Discord.js-v13/commands/_template.js) and [_base.js](https://github.com/Moeefa/Discord.js-Command-Handler/blob/Discord.js-v13/commands/_base.js) files.
 
