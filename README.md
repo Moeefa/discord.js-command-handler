@@ -1,6 +1,6 @@
 ## Discord.js Command Handler
 ##### Introduction
-This command handler use Discord.js v14 and is free to use to everyone.
+This command handler use slash commands from Discord.js version 14 and is free to use to everyone.
 
 You can take a look at Discord.js docs: https://discord.js.org/ (if you're from the future and use a newer version of Discord.js, like v15, please be aware that there might be some issues and you must revert to v14 or update the handler by yourself).
 
