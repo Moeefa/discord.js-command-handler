@@ -7,7 +7,7 @@ You can take a look at Discord.js docs: https://discord.js.org/ (if you're from 
 ##### Configure the handler
 You can modify ``config.json`` to modify the color of embeds, the ID of owner of the bot and the commands prefix.
 
-To login your bot, in the line 9 of ``index.js`` change the ``process.env.TOKEN`` to your token.
+To login your bot, in the line 17 of ``index.js`` change the ``process.env.TOKEN`` to your token.
 ```js
 bot.login(process.env.TOKEN);
 ```
