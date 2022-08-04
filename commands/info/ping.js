@@ -2,7 +2,6 @@ import Discord from 'discord.js';
 
 export default {
   description: this,
-  usage: "ping",
   dmPermission: true,
   async execute(interaction) {
     let m = await interaction.reply({ fetchReply: true, content: "Ping? 🏓" })
