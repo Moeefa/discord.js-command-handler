@@ -54,7 +54,7 @@ export default {
   defaultMemberPermissions: PermissionFlagsBits.Administrator // The permission the member need to run the command in the guild it was ran.
 };
 ```
-These strings need to be a permission flag bits, you can checkout the avaibles permissions flags here: https://discord-api-types.dev/api/discord-api-types-payloads/common#PermissionFlagsBits
+These strings/array need to be a string of permission flag bits, you can checkout the avaibles permissions flags here: https://discord-api-types.dev/api/discord-api-types-payloads/common#PermissionFlagsBits
 
 You can import these using the following:
 ```js
