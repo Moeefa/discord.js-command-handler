@@ -1,5 +1,6 @@
 export default {
   "PrimaryColor": "RANDOM", 
-  "devFolder": "dev",
-  "ownerID": "YOUR_ID"
+  "DevFolder": "dev",
+  "OwnerID": "YOUR_ID",
+  "OwnerGuildID": "YOUR_SECRET_GUILD_ID"
 }
