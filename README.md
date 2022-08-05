@@ -5,7 +5,7 @@ This command handler use slash commands from Discord.js version 14 and is free t
 You can take a look at Discord.js docs: https://discord.js.org/ (if you're from the future and use a newer version of Discord.js, like v15, please be aware that there might be some issues and you must revert to v14 or update the handler by yourself).
 
 ##### Configure the handler
-You can modify ``config.json`` to modify the color of embeds, the ID of owner of the bot and the commands prefix.
+You can modify ``config.js`` to modify the color of embeds, the ID of owner of the bot and the commands prefix.
 
 To login your bot, in the line 17 of ``index.js`` change the ``process.env.TOKEN`` to your token.
 ```js
