@@ -20,7 +20,7 @@ export const loadCommands = async (bot) => {
       !props.default.dmPermission ? props.default.dmPermission = false : void 0;
 
       bot.commands.set(props.default.name, props.default);
-      (props.default.category == bot.config.devFolder) ? bot.guilds.cache.get("484178304266403841").commands.create(props.default) : allCmds.push(props.default);
+      (props.default.category == bot.config.devFolder) ? bot.guilds.cache.get(bot.config.OwnerGuildID).commands.create(props.default) : allCmds.push(props.default);
       console.log(`Loaded command: \x1b[93m${props.default.name}\x1b[0m`);
     };
   };
