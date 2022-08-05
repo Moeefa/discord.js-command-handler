@@ -18,14 +18,23 @@ bot.login(process.env.TOKEN);
 An example of how to configure your command:
 ```js
 export default {
-  dmPermission: false, // Wether if the command can be only runned from a guild.
-  name: "command", // The name of your command.
-  category: "category", // The category.
-  options: [], // Usage of the command.
-  defaultMemberPermissions: [] || String, // The permission the member need to run command.
+  type: Number, // Type of command, defaults to 1.
+  name: String, // The name of your command.
+  nameLocalizations: Object, // The localizations for the command name.
+  description: String, // Description of command.
+  descriptionLocalizations: Object, // The localizations for the command description.
+  category: String, // The category.
+  options: Array, // Usage of the command.
+  dmPermission: Boolean, // Wether if the command can be ran from DM.
+  defaultMemberPermissions: Array || String, // The permission the member need to run command.
   execute(interaction) {} // The function to run your command.
 };
 ```
+You can import the command types using the following:
+```js
+import { ApplicationCommandType } from "discord.js";
+```
+
 You can also take a look at: [ApplicationCommandData](https://discord.js.org/#/docs/discord.js/main/typedef/ApplicationCommandData) to see all avaible configurations.
 
 ##### How to create commands
@@ -54,7 +63,7 @@ export default {
   defaultMemberPermissions: PermissionFlagsBits.Administrator // The permission the member need to run the command in the guild it was ran.
 };
 ```
-These strings/array need to be a string of permission flag bits, you can checkout the avaibles permissions flags here: https://discord-api-types.dev/api/discord-api-types-payloads/common#PermissionFlagsBits
+These strings/array need to be a string of permission flag bits, you can checkout the avaibles permissions flags here: [PermissionFlagsBits](https://discord-api-types.dev/api/discord-api-types-payloads/common#PermissionFlagsBits)
 
 You can import these using the following:
 ```js
