@@ -21,6 +21,7 @@ bot.commands = new Collection();
 bot.updatePresence = () => {
   let act = [
     ["Using Moeefa's command handler!", ActivityType.Playing],
+    ["I'm alive!", ActivityType.Playing]
   ];
 
   let rnd = act[Math.floor(Math.random() * act.length)];
