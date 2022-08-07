@@ -19,12 +19,11 @@ bot.config = config;
 bot.categories = new Collection();
 bot.commands = new Collection();
 bot.updatePresence = () => {
-  let totalSeconds = (bot.uptime / 1000);
-  let hours = Math.floor(totalSeconds / 3600);
-  var act = [
+  let act = [
     ["Using Moeefa's command handler!", ActivityType.Playing],
   ];
-  var rnd = act[Math.floor(Math.random() * act.length)];
+
+  let rnd = act[Math.floor(Math.random() * act.length)];
   bot.user.setActivity(rnd[0], {
     type: rnd[1]
   });
