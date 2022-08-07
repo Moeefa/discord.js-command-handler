@@ -22,12 +22,10 @@ bot.updatePresence = () => {
   let totalSeconds = (bot.uptime / 1000);
   let hours = Math.floor(totalSeconds / 3600);
   var act = [
-    ["Eu ainda estou em testes!", ActivityType.Playing],
-    [`Estou online faz ${hours} horas!`, ActivityType.Playing],
-    [`Quer deletar os seus dados do meu banco de dados? Você pode fazer isso usando /unregister`, ActivityType.Playing]
+    ["Using Moeefa's command handler!", ActivityType.Playing],
   ];
   var rnd = act[Math.floor(Math.random() * act.length)];
-  bot.user.setActivity("/help | " + rnd[0], {
+  bot.user.setActivity(rnd[0], {
     type: rnd[1]
   });
 };
