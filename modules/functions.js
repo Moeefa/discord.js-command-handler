@@ -1,10 +1,4 @@
-import Discord from "discord.js";
-import path from "path";
 import { readdirSync, lstatSync } from "fs";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 export const loadCommands = async (bot) => {
   let allCmds = [];
